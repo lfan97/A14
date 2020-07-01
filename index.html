@@ -7,20 +7,48 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
     <title>Cookies!</title>
     <script>
-        document.write(`it is'+ Date()+ "<br/>");
-        function doTheThing(){
-        setTimeout(function(){
-            location.reload()
-        },5000);
-      }
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires="+d.toUTCString();
+            var cookieCookie = cname + "=" + cvalue + " ; " + expires + ";path=/";
+            document.write(' The Value of your Cookie is ' + cookieCookie + '<br/>');
+            document.cookie = cookieCookie;
+
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function checkCookie() {
+            var user = getCookie("username");
+            if (user != "") {
+                alert("Welcome again " + user);
+            } else {
+                user = prompt("Please enter your name:", "");
+                if (user != "" && user != null) {
+                    setCookie("username", user, 365);
+                }
+            }
+        }
     </script>
 </head>
-<body>
-  <h1 class="title">Cookie!!!!!!</h1>
+<body onload="checkCookie()"> </body>
 
 <footer>
     <p>&copy; 2020, Lujia, due 29/jun </p>
-    <p>location.reload function</p>
     <button onclick="location.reload()">Reload page!</button>
 </footer>
 </body>
